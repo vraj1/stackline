@@ -1,8 +1,7 @@
 import { useAppDispatch } from './store';
 
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, current } from "@reduxjs/toolkit";
 import axios from "axios";
-import { PayloadAction } from "@reduxjs/toolkit/dist/createAction";
 
 
 interface ProductData {
@@ -31,6 +30,14 @@ interface ProductData {
     loading: boolean,
     error: string
 }
+interface Sales{
+        weekEnding: string,
+        retailSales: number,
+        wholesaleSales: number,
+        unitsSold: number,
+        retailerMargin: number
+}
+
 const initialState: ProductData = {data: 
   {
     "id": "",
@@ -64,6 +71,17 @@ const initialState: ProductData = {data:
   }
 , loading: false, error: ""}
 
+interface Map {
+    [key: string]: string | undefined
+  }
+const sortDirection: Map = {
+    "weekEnding": "ascending",
+        "retailSales": "ascending",
+        "wholesaleSales": "ascending",
+        "unitsSold": "ascending",
+        "retailerMargin": "ascending"
+}
+
 export const getProductData = createAsyncThunk("product/fetch", async (thunkAPI) => {
     const response = await axios.get("https://api.jsonbin.io/v3/b/65a1c781dc74654018919062").then((res: any) =>{
         const data = res.data.record[0]
@@ -78,8 +96,31 @@ export const dataSlice = createSlice({
     name: 'data',
     initialState,
     reducers: {
-        sortData: (state: any = {}, action: {payload: string}) => {
-            state.data = action.payload
+        sortData: (state: any, action: {payload: string}) => {
+            if(Object.getOwnPropertyNames(state).length === 0){
+                return state
+            }
+            const key = action.payload
+            const sales = state.data.sales.map((sale: any) => Object.assign({}, sale))
+            console.log(sales)
+            let sortedSales;
+            //date sort
+            if(key==='weekEnding'){
+                sortedSales = sales.sort((a: any , b: any ) => 
+                    sortDirection[key] === 'ascending' ? new Date(b[key]).getTime() - new Date(a[key]).getTime() :
+                    new Date(a[key]).getTime() - new Date(b[key]).getTime()
+                )
+            }else{
+                sortedSales = sales.sort((a: any, b: any) => sortDirection[key] === 'ascending' ? b[key] - a[key] : a[key] - b[key]
+                )
+                //console.log(sortedSales)
+            }
+            console.log(sortedSales)
+            sortDirection[key] = sortDirection[key] === "ascending" ? "descending" : "ascending";
+            //console.log(current(state.data.sales))
+            //state.data.sales = sortedSales
+            return Object.assign(state, state.data.sales = sortedSales)
+           
         }
     },
     extraReducers:(builder) =>{

@@ -98,3 +98,28 @@
   border-top: var(--horizontal-border);
   border-bottom: var(--horizontal-border);
 }
+.table-container {
+  grid-area: table-container;
+  background-color: var(--container-background-color);
+  border-left: var(--thin-vertical-border);
+  border-right: var(--thick-vertical-border);
+  border-bottom: var(--horizontal-border);
+}
+#table {
+  text-align: center;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+table th {
+  padding: 2%;
+  font-weight: 300;
+}
+tbody td {
+  border-top: 2px solid var(--light-gray);
+  padding: 2%;
+}
+th:hover {
+  cursor: pointer;
+}

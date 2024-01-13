@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { getProductData } from "../redux/reducers";
-import { useAppDispatch, useAppSelector } from "../redux/store";
+import { useAppDispatch, useAppSelector } from "../redux/store"; 
 import Spinner from "./Spinner";
 import { v4 as uuidv4 } from "uuid";
 
