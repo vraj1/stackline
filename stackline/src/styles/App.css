@@ -1,0 +1,100 @@
+:root {
+  /* CSS Grid Variables */
+  --product-min-width: 250px;
+  --header-min-height: 80px;
+  --chart-min-height: 600px;
+  --table-min-height: 700px;
+  /* Color Variables */
+  --light-gray: #f7f8fa;
+  --gray: gray;
+  --container-background-color: white;
+  /* Border Variables */
+  --border-vertical-width: 10px;
+  --border-double-vertical-width: 20px;
+  --border-horiz-width: 55px;
+  --thin-vertical-border: var(--border-vertical-width) solid var(--light-gray);
+  --thick-vertical-border: var(--border-double-vertical-width) solid
+    var(--light-gray);
+  --horizontal-border: var(--border-horiz-width) solid var(--light-gray);
+  /* The hexes of the blue variables are used in the chart */
+  /* --dark-blue: #3c4858;
+  --bright-blue: #40a8ef;  */
+}
+
+.grid-container {
+  display: grid;
+  min-height: 100%;
+  grid-template-columns: minmax(var(--product-min-width), 0.4fr) 1.3fr;
+  grid-auto-rows: minmax(var(--header-min-height), 0.15fr)
+    minmax(var(--chart-min-height), 1.4fr)
+    minmax(var(--table-min-height), max-content);
+  grid-template-areas: "header-container header-container" "product-container chart-container" "product-container table-container";
+}
+
+/* Product Styles */
+.product-container {
+  grid-area: product-container;
+  background-color: var(--container-background-color);
+  border-left: var(--thick-vertical-border);
+  border-right: var(--thin-vertical-border);
+  border-top: var(--horizontal-border);
+  border-bottom: var(--horizontal-border);
+}
+#product img {
+  height: 100%;
+  width: 100%;
+}
+#title {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  padding: 2%;
+}
+#subtitle {
+  text-align: center;
+  font-weight: 300;
+  color: var(--gray);
+  padding: 2%;
+}
+#spans {
+  text-align: center;
+}
+.tags {
+  border: 2px solid var(--light-gray);
+  border-radius: 5px;
+  padding: 2%;
+  margin: 2%;
+  display: inline-block;
+}
+#icons {
+  text-align: left;
+}
+#overview-icon,
+#sales-icon {
+  margin: 10%;
+}
+#overview-icon-text,
+#sales-icon-text {
+  margin-left: 10%;
+}
+#product a {
+  text-decoration: none;
+  color: black;
+}
+#product hr {
+  background-color: var(--light-gray);
+  height: 2px;
+  border: 0;
+}
+
+.chart-container {
+  grid-area: chart-container;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--container-background-color);
+  border-left: var(--thin-vertical-border);
+  border-right: var(--thick-vertical-border);
+  border-top: var(--horizontal-border);
+  border-bottom: var(--horizontal-border);
+}
