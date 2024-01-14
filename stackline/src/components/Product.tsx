@@ -1,17 +1,9 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { getProductData } from "../redux/reducers";
-import { useAppDispatch, useAppSelector } from "../redux/store"; 
+import { useAppDispatch, useAppSelector } from "../redux/store";
 import Spinner from "./Spinner";
 import { v4 as uuidv4 } from "uuid";
-
-type ProductData = {
-  image: string;
-  title: string;
-  subtitle: string;
-  tags: Array<string>;
-};
 
 function Product() {
   const dispatch = useAppDispatch();
@@ -19,7 +11,6 @@ function Product() {
     dispatch(getProductData());
   }, []);
 
-  // const {allData, loading, error} = useAppSelector((state) => state.data)
   const { data, loading, error } = useAppSelector(state => state.data);
 
   if (loading || !data) {
